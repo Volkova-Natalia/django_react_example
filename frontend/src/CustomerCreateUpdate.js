@@ -18,9 +18,7 @@ class CustomerCreateUpdate extends Component {
 
     componentDidMount() {
         const {match: { params } } = this.props;
-        // window.alert("componentDidMount")
         if (params && params.pk) {
-            window.alert("componentDidMount - if")
             customersService.getCustomer(params.pk).then((c)=> {
                 this.refFirstName.current.value = c.first_name;
                 this.refLastName.current.value = c.last_name;
@@ -33,7 +31,6 @@ class CustomerCreateUpdate extends Component {
     }
 
     handleCreate() {
-        // window.alert("handleCreate")
         customersService.createCustomer({
             "first_name": this.refFirstName.current.value,
             "last_name": this.refLastName.current.value,
@@ -42,9 +39,9 @@ class CustomerCreateUpdate extends Component {
             "address": this.refAddress.current.value,
             "description": this.refDescription.current.value
         }).then((result)=> {
-            window.alert("Customer created!");
+            alert("Customer created!");
         }).catch(()=> {
-            window.alert("There was an error! Please re-check your form.");
+            alert("There was an error! Please re-check your form.");
         });
     }
     handleUpdate(pk) {
@@ -63,10 +60,8 @@ class CustomerCreateUpdate extends Component {
         })
     }
     handleSubmit(event) {
-        // window.alert("handleSubmit")
         const {match: { params } } = this.props;
         if (params && params.pk) {
-            // window.alert("handleUpdate")
             this.handleUpdate(params.pk);
         }
         else {
