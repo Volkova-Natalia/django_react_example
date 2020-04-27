@@ -91,12 +91,19 @@ class CustomerCreateUpdate extends Component {
             // "address": this.refs.address.value,
             // "description": this.refs.description.value
 
-            "first_name": this.firstName,
-            "last_name": this.lastName,
-            "email": this.email,
-            "phone": this.phone,
-            "address": this.address,
-            "description": this.description
+            // "first_name": this.firstName,
+            // "last_name": this.lastName,
+            // "email": this.email,
+            // "phone": this.phone,
+            // "address": this.address,
+            // "description": this.description
+
+            "first_name": this.refFirstName.current.value,
+            "last_name": this.refLastName.current.value,
+            "email": this.refEmail.current.value,
+            "phone": this.refPhone.current.value,
+            "address": this.refAddress.current.value,
+            "description": this.refDescription.current.value
         }).then((result)=> {
             alert("Customer updated!");
         }).catch(()=> {
