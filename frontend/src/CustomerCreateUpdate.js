@@ -29,12 +29,19 @@ class CustomerCreateUpdate extends Component {
                 // this.refs.address.value = c.address;
                 // this.refs.description.value = c.description;
 
-                this.firstName = c.first_name;
-                this.lastName = c.last_name;
-                this.email = c.email;
-                this.phone = c.phone;
-                this.address = c.address;
-                this.description = c.description;
+                // this.firstName = c.first_name;
+                // this.lastName = c.last_name;
+                // this.email = c.email;
+                // this.phone = c.phone;
+                // this.address = c.address;
+                // this.description = c.description;
+
+                this.refFirstName.current.value = c.first_name;
+                this.refLastName.current.value = c.last_name;
+                this.refEmail.current.value = c.email;
+                this.refPhone.current.value = c.phone;
+                this.refAddress.current.value = c.address;
+                this.refDescription.current.value = c.description;
 
                 // this.setFirstName(c);
                 // this.setLastName(c);
