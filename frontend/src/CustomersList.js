@@ -36,7 +36,7 @@ class CustomersList extends Component {
         var self = this;
         console.log(this.state.nextPageURL);
         customersService.getCustomersByURL(this.state.nextPageURL).then((result)=>{
-            self.setState({customer: result.data, nextPageURL: result.nextlink})
+            self.setState({customers: result.data, nextPageURL: result.nextlink})
         });
     }
 
