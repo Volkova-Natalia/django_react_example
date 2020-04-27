@@ -8,8 +8,10 @@ class CustomersList extends Component {
         super(props);
         this.state = {
             customers: [],
-            nextPageURL: ''
+            prevPageURL: '',
+            nextPageURL: '',
         };
+        this.prevPage = this.prevPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -17,7 +19,9 @@ class CustomersList extends Component {
     componentDidMount() {
         var self = this;
         customersService.getCustomers().then(function (result) {
-            console.log(result);
+            console.log(" prev = ", result.prevlink);
+            console.log(" next = ", result.nextlink);
+            self.setState({customers: result.data, prevPageURL: result.prevlink})
             self.setState({customers: result.data, nextPageURL: result.nextlink})
         });
     }
@@ -32,11 +36,30 @@ class CustomersList extends Component {
             self.setState({customer: newArr})
         });
     }
+    prevPage(){
+        var self = this;
+        console.log(this.state.prevPageURL);
+        customersService.getCustomersByURL(this.state.prevPageURL).then((result)=>{
+            console.log("*prev = ", result.prevlink);
+            console.log(" next = ", result.nextlink);
+            self.setState({
+                customers: result.data,
+                prevPageURL: result.prevlink,
+                nextPageURL: result.nextlink,
+            })
+        });
+    }
     nextPage(){
         var self = this;
         console.log(this.state.nextPageURL);
         customersService.getCustomersByURL(this.state.nextPageURL).then((result)=>{
-            self.setState({customers: result.data, nextPageURL: result.nextlink})
+            console.log(" prev = ", result.prevlink);
+            console.log("*next = ", result.nextlink);
+            self.setState({
+                customers: result.data,
+                prevPageURL: result.prevlink,
+                nextPageURL: result.nextlink,
+            })
         });
     }
 
@@ -74,7 +97,8 @@ class CustomersList extends Component {
                     )}
                     </tbody>
                 </table>
-                <button className="btn btn-primary" onClick={ this.nextPage }>Next</button>
+                <button className="btn btn-primary mr-2" onClick={ this.prevPage }>Prev</button>
+                <button className="btn btn-primary mr-2" onClick={ this.nextPage }>Next</button>
             </div>
         );
     }
