@@ -22,10 +22,7 @@ export default class CustomersService {
         return axios.delete(url);
     }
     createCustomer(customer) {
-        // window.alert("createCustomer")
         const url = `${API_URL}/api/customers/`;
-        // window.alert(url)
-        window.alert(customer)
         return axios.post(url, customer);
     }
     updateCustomer(customer) {
