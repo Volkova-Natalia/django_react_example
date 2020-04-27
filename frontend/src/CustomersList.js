@@ -76,7 +76,7 @@ class CustomersList extends Component {
                 <table className="table">
                     <thead key="thead">
                     <tr>
-                        <th>#</th>
+                        <th>pk</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
