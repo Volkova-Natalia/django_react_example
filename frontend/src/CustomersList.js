@@ -8,6 +8,8 @@ class CustomersList extends Component {
         super(props);
         this.state = {
             customers: [],
+            countCustomers: 0,
+            numPages:0,
             prevPageURL: '',
             nextPageURL: '',
         };
@@ -19,10 +21,8 @@ class CustomersList extends Component {
     componentDidMount() {
         var self = this;
         customersService.getCustomers().then(function (result) {
-            console.log(" prev = ", result.prevlink);
-            console.log(" next = ", result.nextlink);
-            self.setState({customers: result.data, prevPageURL: result.prevlink})
-            self.setState({customers: result.data, nextPageURL: result.nextlink})
+            self._console_log_result(result);
+            self._setState(result);
         });
     }
 
@@ -40,27 +40,34 @@ class CustomersList extends Component {
         var self = this;
         console.log(this.state.prevPageURL);
         customersService.getCustomersByURL(this.state.prevPageURL).then((result)=>{
-            console.log("*prev = ", result.prevlink);
-            console.log(" next = ", result.nextlink);
-            self.setState({
-                customers: result.data,
-                prevPageURL: result.prevlink,
-                nextPageURL: result.nextlink,
-            })
+            self._console_log_result(result);
+            self._setState(result);
         });
     }
     nextPage(){
         var self = this;
         console.log(this.state.nextPageURL);
         customersService.getCustomersByURL(this.state.nextPageURL).then((result)=>{
-            console.log(" prev = ", result.prevlink);
-            console.log("*next = ", result.nextlink);
-            self.setState({
-                customers: result.data,
-                prevPageURL: result.prevlink,
-                nextPageURL: result.nextlink,
-            })
+            self._console_log_result(result);
+            self._setState(result);
         });
+    }
+
+    _console_log_result(result){
+        console.log("count = ", result.count_customers);
+        console.log("num   = ", result.num_pages);
+        console.log("prev  = ", result.prev_link);
+        console.log("next  = ", result.next_link);
+    }
+    _setState(result){
+        var self = this;
+        self.setState({
+            customers: result.data,
+            countCustomers: result.count_customers,
+            numPages: result.num_pages,
+            prevPageURL: result.prev_link,
+            nextPageURL: result.next_link,
+        })
     }
 
     render() {

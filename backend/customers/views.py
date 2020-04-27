@@ -46,10 +46,10 @@ def customers_list(request):
             previous_page = data.previous_page_number()
 
         return Response({'data': serializer.data,
-                         'count': paginator.count,
-                         'numpages': paginator.num_pages,
-                         'nextlink': '/api/customers/?page=' + str(next_page),
-                         'prevlink': '/api/customers/?page=' + str(previous_page)})
+                         'count_customers': paginator.count,
+                         'num_pages': paginator.num_pages,
+                         'next_link': '/api/customers/?page=' + str(next_page),
+                         'prev_link': '/api/customers/?page=' + str(previous_page)})
 
     elif request.method == 'POST':
         print(request.data)
