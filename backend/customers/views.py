@@ -63,7 +63,6 @@ def customers_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-# @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def customers_detail(request, pk):
     print("customers_detail")
     print(request.method)
@@ -75,15 +74,6 @@ def customers_detail(request, pk):
     if request.method == 'GET':
         serializer = CustomerSerializer(customer, context={'request': request})
         return Response(serializer.data)
-
-    # elif request.method == 'POST':
-    #     serializer = CustomerSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data,
-    #                         status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors,
-    #                     status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'PUT':
         serializer = CustomerSerializer(customer, data=request.data, context={'request': request})
