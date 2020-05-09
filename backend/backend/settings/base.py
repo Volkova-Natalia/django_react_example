@@ -14,13 +14,12 @@ import os
 from dotenv import load_dotenv
 from distutils.util import strtobool
 
-print(__file__)
+# print(__file__)
 
 load_dotenv()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -34,7 +33,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(strtobool(os.getenv('DEBUG', 'False')))
 
 ALLOWED_HOSTS = eval(os.getenv('ALLOWED_HOSTS', '[]'))
-# print('ALLOWED_HOSTS', ALLOWED_HOSTS)
 
 
 # Application definition
@@ -67,8 +65,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,7 +93,6 @@ else:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-# print('DATABASES', DATABASES)
 
 
 # Password validation
@@ -142,4 +138,3 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = bool(strtobool(os.getenv('CORS_ORIGIN_ALLOW_ALL', 'False')))
 
 CORS_ORIGIN_WHITELIST = eval(os.getenv('CORS_ORIGIN_WHITELIST', '[]'))
-# print('CORS_ORIGIN_WHITELIST', CORS_ORIGIN_WHITELIST)
