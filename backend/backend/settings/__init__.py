@@ -1,17 +1,8 @@
-# from .local import *
-# from .development import *
-# from .integration import *
-# from .testing import *
-# from .staging import *
-# from .production import *
-
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-APPLICATION_ENVIROMENT = os.getenv('APPLICATION_ENVIROMENT')
-# print('APPLICATION_ENVIROMENT', APPLICATION_ENVIROMENT)
-IMPORT_SETTINGS_ENVIROMENT = 'from .' + APPLICATION_ENVIROMENT + ' import *'
-# print('IMPORT_SETTINGS_ENVIROMENT', IMPORT_SETTINGS_ENVIROMENT)
-exec(IMPORT_SETTINGS_ENVIROMENT)
+APPLICATION_ENVIRONMENT = os.getenv('APPLICATION_ENVIRONMENT')
+IMPORT_SETTINGS_ENVIRONMENT = 'from .' + APPLICATION_ENVIRONMENT + ' import *'
+exec(IMPORT_SETTINGS_ENVIRONMENT)
