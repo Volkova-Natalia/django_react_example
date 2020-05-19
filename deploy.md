@@ -45,6 +45,13 @@
       ~ $ workon djangoreactexample.pythonanywhere.com  
 ```
 
+Для подтягивания изменений из GitHub:  
+```python
+Консоль "Bash":
+   ~ $ cd django_react_example/
+   ~/django_react_example (master)$ git pull
+```
+
 #### 2.1. Настройка веб-приложения и файла WSGI.  
 
 
