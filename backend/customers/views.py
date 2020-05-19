@@ -19,6 +19,12 @@ def all(request):
     return HttpResponse("<h3>Hello Django!</h3>")
 
 
+def home(request):
+    print("home")
+    print(request.method)
+    return render(request, 'customers/home.html')
+
+
 # Create your views here.
 @api_view(['GET', 'POST'])
 def customers_list(request):
