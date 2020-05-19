@@ -106,6 +106,43 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 ```
 
+Для того, чтобы проект подтягивал переменные среды из файла .env в этот файл wsgi.py необходимо внести некоторые дополнения.  
+
+```python
+from dotenv import load_dotenv
+path_settings = path + '/backend/settings/'
+settings_folder = os.path.expanduser(path_settings)  # adjust as appropriate
+load_dotenv(os.path.join(settings_folder, '.env'))
+```
+
+При этом файл в итоге будет выглядеть следующим образом:  
+
+```python
+# +++++++++++ DJANGO +++++++++++
+# To use your own django app use code like this:
+import os
+import sys
+from dotenv import load_dotenv
+
+# assuming your django settings file is at '/home/djangoreactexample/mysite/mysite/settings.py'
+# and your manage.py is is at '/home/djangoreactexample/mysite/manage.py'
+path = '/home/djangoreactexample/django_react_example/backend'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'backend.settings'
+
+path_settings = path + '/backend/settings/'
+settings_folder = os.path.expanduser(path_settings)  # adjust as appropriate
+load_dotenv(os.path.join(settings_folder, '.env'))
+
+
+# then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+```
+
+***Примечание:*** **python-dotenv** в виртуальное окружение virtualenv должен был быть установлен ранее - командой **pip3.8 install -r requirements.txt --user**, поскольку он использовался и на локальной машине.  
 
 
 ### 3. Внесение изменений в проект:  
