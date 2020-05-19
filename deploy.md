@@ -1,4 +1,4 @@
-#PythonAnywhere  
+# PythonAnywhere  
 
 [https://www.pythonanywhere.com](https://www.pythonanywhere.com/)  
 
@@ -8,11 +8,11 @@
 
 
 
-###1. Регистрация на PythonAnywhere.  
+### 1. Регистрация на PythonAnywhere.  
 * Создать аккаунт уровня "Beginner" на PythonAnywhere. Он бесплатный.  
 ***Примечание:*** URL сайта примет вид **yourusername.pythonanywhere.com**, поэтому при регистрации указать имя **djangoreactexample**.
 
-####1.1. Создание API токена для PythonAnywhere.  
+#### 1.1. Создание API токена для PythonAnywhere.  
 Это нужно будет сделать только один раз при регистрации.
 
 ```python
@@ -23,7 +23,7 @@
 
 
 
-###2. Развертывание существующего проекта на PythonAnywhere.  
+### 2. Развертывание существующего проекта на PythonAnywhere.  
 
 ```python
 Вкладка Dashboard:  
@@ -45,7 +45,7 @@
       ~ $ workon djangoreactexample.pythonanywhere.com  
 ```
 
-####2.1. Настройка веб-приложения и файла WSGI.  
+#### 2.1. Настройка веб-приложения и файла WSGI.  
 
 
 2.1.1. Создание веб-приложения с ручной настройкой.  
@@ -108,7 +108,7 @@ application = get_wsgi_application()
 
 
 
-###3. Внесение изменений в проект:  
+### 3. Внесение изменений в проект:  
 ```python
 Вкладка "Files":
    Создать .env файл в соответствующей директории  
@@ -119,11 +119,11 @@ application = get_wsgi_application()
 
 
 
-###4. Настройка базы данных:  
+### 4. Настройка базы данных:  
 
 
 
-###5. Итоговый сайт:  
+### 5. Итоговый сайт:  
 ```python
 Вкладка "Web":  
    Нажать "Reload djangoreactexample.pythonanywhere.com"  
