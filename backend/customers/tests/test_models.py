@@ -80,7 +80,7 @@ class CustomerTestCase(TestCase):
     def test_date_create_auto_now_add(self):
         customer = Customer.objects.get(id=1)
         date_create = customer.date_create
-        date_max_limit = self.date_today + datetime.timedelta(milliseconds=1)
+        date_max_limit = self.date_today + datetime.timedelta(milliseconds=300)
         self.assertGreaterEqual(date_create, self.date_today)
         self.assertLess(date_create, date_max_limit)
 
