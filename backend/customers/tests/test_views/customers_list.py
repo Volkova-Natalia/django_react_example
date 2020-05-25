@@ -3,7 +3,7 @@ from django.test.client import Client
 from rest_framework import status
 
 from customers.models import Customer
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from customers.serializers import CustomerSerializer
 
 import math
@@ -11,6 +11,9 @@ import math
 
 # Create your tests here.
 class CustomersListTestCase(TestCase):
+    url_base = '/api/customers/'
+    url_query = url_base + '?page='     # '/api/customers/?page='
+
     @classmethod
     def setUpTestData(cls):
         pass
@@ -37,12 +40,6 @@ class CustomersListTestCase(TestCase):
     def _get_data_expected(self, page):
         customers = Customer.objects.all()
         paginator = Paginator(customers, self.count_customers_per_page)
-        # try:
-        #     data = paginator.page(page)
-        # except PageNotAnInteger:
-        #     data = paginator.page(1)
-        # except EmptyPage:
-        #     data = paginator.page(paginator.num_pages)
         data = paginator.page(page)
         serializer = CustomerSerializer(data, many=True)
         return serializer.data
@@ -52,25 +49,25 @@ class CustomersListTestCase(TestCase):
         self.assertEquals(response.data['count_customers'], self.count_customers)
         self.assertEquals(response.data['num_pages'], self.num_pages)
         if page == self.num_pages:
-            self.assertEquals(response.data['next_link'], '/api/customers/?page=' + str(1))
+            self.assertEquals(response.data['next_link'], self.url_query + str(1))
         else:
-            self.assertEquals(response.data['next_link'], '/api/customers/?page=' + str(page + 1))
+            self.assertEquals(response.data['next_link'], self.url_query + str(page + 1))
         if page == 1:
-            self.assertEquals(response.data['prev_link'], '/api/customers/?page=' + str(page))
+            self.assertEquals(response.data['prev_link'], self.url_query + str(page))
         else:
-            self.assertEquals(response.data['prev_link'], '/api/customers/?page=' + str(page - 1))
+            self.assertEquals(response.data['prev_link'], self.url_query + str(page - 1))
         data_expected = self._get_data_expected(page)
         self.assertEquals(response.data['data'], data_expected)
 
     def test_get_clean(self):
         client = Client()
-        response = client.get('/api/customers/')
+        response = client.get(self.url_base)
         self._test_get_clean(response, 1)
 
     def test_get_query_clean(self):
         client = Client()
         for page in range(1, self.num_pages+1):
-            response = client.get('/api/customers/?page=' + str(page))
+            response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page)
 
     # ----- POST -----
@@ -91,7 +88,7 @@ class CustomersListTestCase(TestCase):
             -1,
         ]
         for page in test_pages:
-            response = client.get('/api/customers/?page=' + str(page))
+            response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page_expected)
 
     def test_get_page_not_an_integer_dirty(self):
@@ -102,7 +99,7 @@ class CustomersListTestCase(TestCase):
             'first',
         ]
         for page in test_pages:
-            response = client.get('/api/customers/?page=' + str(page))
+            response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page_expected)
 
     # ----- POST -----
