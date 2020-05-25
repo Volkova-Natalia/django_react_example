@@ -6,6 +6,8 @@ from django.shortcuts import render
 
 # Create your tests here.
 class HomeTestCase(TestCase):
+    url = ''
+
     @classmethod
     def setUpTestData(cls):
         pass
@@ -20,7 +22,7 @@ class HomeTestCase(TestCase):
 
     def test_get(self):
         client = Client()
-        response = client.get('')
+        response = client.get(self.url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         request = response.context['request']
