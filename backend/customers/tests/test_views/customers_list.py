@@ -102,4 +102,49 @@ class CustomersListTestCase(TestCase):
             response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page_expected)
 
+    def test_get_query_dirty(self):
+        client = Client()
+        page_expected = 1
+        test_queries = [
+            '?',
+            '?key=0',
+            '?key=1',
+            '?key=value',
+
+            '?page-1',
+            '?page0',
+            '?page1',
+            '?page' + str(self.num_pages),
+            '?page' + str(self.num_pages + 1),
+            '?page' + str(self.num_pages + 2),
+
+            '?page==-1',
+            '?page==0',
+            '?page==1',
+            '?page==' + str(self.num_pages),
+            '?page==' + str(self.num_pages + 1),
+            '?page==' + str(self.num_pages + 2),
+        ]
+        for query in test_queries:
+            response = client.get(self.url_base + str(query))
+            self._test_get_clean(response, page_expected)
+
+    def test_get_query_missing_dirty(self):
+        client = Client()
+        test_queries = [
+            'page=-1',
+            'page=0',
+            'page=1',
+            'page=' + str(self.num_pages),
+            'page=' + str(self.num_pages + 1),
+            'page=' + str(self.num_pages + 2),
+
+            'key=0',
+            'key=1',
+            'key=value',
+        ]
+        for query in test_queries:
+            response = client.get(self.url_base + str(query))
+            self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
     # ----- POST -----

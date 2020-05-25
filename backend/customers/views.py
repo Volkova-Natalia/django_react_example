@@ -40,10 +40,14 @@ def customers_list(request):
 
         try:
             data = paginator.page(page)
+            print('try success')
         except PageNotAnInteger:
             data = paginator.page(1)
+            print('PageNotAnInteger')
         except EmptyPage:
             data = paginator.page(paginator.num_pages)
+            print('EmptyPage')
+        print('data =', data)
 
         serializer = CustomerSerializer(data, context={'request': request}, many=True)
         if data.has_next():
