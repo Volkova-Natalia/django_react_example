@@ -69,9 +69,7 @@ class CustomersListTestCase(TestCase):
 
     def test_get_query_clean(self):
         client = Client()
-        page = 0
-        while page < self.num_pages:
-            page = page + 1
+        for page in range(1, self.num_pages+1):
             response = client.get('/api/customers/?page=' + str(page))
             self._test_get_clean(response, page)
 
@@ -82,5 +80,29 @@ class CustomersListTestCase(TestCase):
     # ======================================================================
 
     # ----- GET -----
+
+    def test_get_empty_page_dirty(self):
+        client = Client()
+        page_expected = self.num_pages
+        test_pages = [
+            0,
+            self.num_pages + 1,
+            self.num_pages + 2,
+            -1,
+        ]
+        for page in test_pages:
+            response = client.get('/api/customers/?page=' + str(page))
+            self._test_get_clean(response, page_expected)
+
+    def test_get_page_not_an_integer_dirty(self):
+        client = Client()
+        page_expected = 1
+        test_pages = [
+            '',
+            'first',
+        ]
+        for page in test_pages:
+            response = client.get('/api/customers/?page=' + str(page))
+            self._test_get_clean(response, page_expected)
 
     # ----- POST -----
