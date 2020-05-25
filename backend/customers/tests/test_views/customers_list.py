@@ -22,6 +22,22 @@ class CustomersListTestCase(TestCase):
         self.count_customers = 126
         self.count_customers_per_page = 10
         self.num_pages = math.ceil(self.count_customers / self.count_customers_per_page)
+
+        self.test_pages_clear = [page for page in range(1, self.num_pages+1)]
+        self.test_pages_dirty = [
+            -1,
+            0,
+            self.num_pages + 1,
+            self.num_pages + 2,
+        ]
+        self.test_pages_all = self.test_pages_clear + self.test_pages_dirty
+
+        self.test_keys = [
+            '0',
+            '1',
+            'value'
+        ]
+
         for i in range(self.count_customers):
             Customer(
                 first_name='first_name_' + str(i),
@@ -66,7 +82,7 @@ class CustomersListTestCase(TestCase):
 
     def test_get_query_clean(self):
         client = Client()
-        for page in range(1, self.num_pages+1):
+        for page in self.test_pages_clear:
             response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page)
 
@@ -81,13 +97,7 @@ class CustomersListTestCase(TestCase):
     def test_get_empty_page_dirty(self):
         client = Client()
         page_expected = self.num_pages
-        test_pages = [
-            0,
-            self.num_pages + 1,
-            self.num_pages + 2,
-            -1,
-        ]
-        for page in test_pages:
+        for page in self.test_pages_dirty:
             response = client.get(self.url_query + str(page))
             self._test_get_clean(response, page_expected)
 
@@ -105,44 +115,18 @@ class CustomersListTestCase(TestCase):
     def test_get_query_dirty(self):
         client = Client()
         page_expected = 1
-        test_queries = [
-            '?',
-            '?key=0',
-            '?key=1',
-            '?key=value',
-
-            '?page-1',
-            '?page0',
-            '?page1',
-            '?page' + str(self.num_pages),
-            '?page' + str(self.num_pages + 1),
-            '?page' + str(self.num_pages + 2),
-
-            '?page==-1',
-            '?page==0',
-            '?page==1',
-            '?page==' + str(self.num_pages),
-            '?page==' + str(self.num_pages + 1),
-            '?page==' + str(self.num_pages + 2),
-        ]
+        test_queries = ['?'] +\
+                       ['?key=' + str(key) for key in self.test_keys] +\
+                       ['?page' + str(page) for page in self.test_pages_all] +\
+                       ['?page==' + str(page) for page in self.test_pages_all]
         for query in test_queries:
             response = client.get(self.url_base + str(query))
             self._test_get_clean(response, page_expected)
 
     def test_get_query_missing_dirty(self):
         client = Client()
-        test_queries = [
-            'page=-1',
-            'page=0',
-            'page=1',
-            'page=' + str(self.num_pages),
-            'page=' + str(self.num_pages + 1),
-            'page=' + str(self.num_pages + 2),
-
-            'key=0',
-            'key=1',
-            'key=value',
-        ]
+        test_queries = ['key=' + str(key) for key in self.test_keys] +\
+                       ['page=' + str(page) for page in self.test_pages_all]
         for query in test_queries:
             response = client.get(self.url_base + str(query))
             self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
