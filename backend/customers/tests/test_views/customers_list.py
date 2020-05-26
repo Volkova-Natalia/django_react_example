@@ -18,10 +18,14 @@ class CustomersListTestCase(TestCase):
     def setUpTestData(cls):
         pass
 
+    def _calc_num_pages(self, count_customers, count_customers_per_page):
+        return math.ceil(self.count_customers / self.count_customers_per_page)
+
     def setUp(self):
         self.count_customers = 126
         self.count_customers_per_page = 10
-        self.num_pages = math.ceil(self.count_customers / self.count_customers_per_page)
+        # self.num_pages = math.ceil(self.count_customers / self.count_customers_per_page)
+        self.num_pages = self._calc_num_pages(self.count_customers, self.count_customers_per_page)
 
         self.test_pages_clear = [page for page in range(1, self.num_pages+1)]
         self.test_pages_dirty = [
@@ -87,6 +91,39 @@ class CustomersListTestCase(TestCase):
             self._test_get_clean(response, page)
 
     # ----- POST -----
+
+    def test_post_clean(self):
+        data_post = {
+            'first_name': 'first_name_post',
+            'last_name': 'last_name_post',
+            'email': 'email_post@email.com',
+            'phone': 'phone_post',
+            'address': '',  # 'address_post',
+            'description': '',  # 'description_post',
+        }
+        client = Client()
+        response = client.post(
+            path=self.url_base,
+            data=data_post,
+            content_type='application/json'
+        )
+        print('\nresponse  ', response)
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+
+        count_customers_expected = self.count_customers + 1
+        num_pages_expected = self._calc_num_pages(count_customers_expected, self.count_customers_per_page)
+
+        count_customers = Customer.objects.count()
+        self.assertEquals(count_customers, count_customers_expected)
+
+        customer = Customer.objects.get(id=count_customers)
+        for field in data_post.keys():
+            self.assertEquals(getattr(customer, field), data_post[field])
+
+        response = client.get(self.url_base)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.data['count_customers'], count_customers_expected)
+        self.assertEquals(response.data['num_pages'], num_pages_expected)
 
     # ======================================================================
     # dirty
