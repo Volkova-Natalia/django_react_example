@@ -10,6 +10,10 @@ import math
 
 
 # Create your tests here.
+def _calc_num_pages(count_customers, count_customers_per_page):
+    return math.ceil(count_customers / count_customers_per_page)
+
+
 class CustomersListTestCase(TestCase):
     url_base = '/api/customers/'
     url_query = url_base + '?page='     # '/api/customers/?page='
@@ -18,14 +22,11 @@ class CustomersListTestCase(TestCase):
     def setUpTestData(cls):
         pass
 
-    def _calc_num_pages(self, count_customers, count_customers_per_page):
-        return math.ceil(self.count_customers / self.count_customers_per_page)
-
     def setUp(self):
         self.count_customers = 126
         self.count_customers_per_page = 10
         # self.num_pages = math.ceil(self.count_customers / self.count_customers_per_page)
-        self.num_pages = self._calc_num_pages(self.count_customers, self.count_customers_per_page)
+        self.num_pages = _calc_num_pages(self.count_customers, self.count_customers_per_page)
 
         self.test_pages_clear = [page for page in range(1, self.num_pages+1)]
         self.test_pages_dirty = [
@@ -111,7 +112,7 @@ class CustomersListTestCase(TestCase):
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
         count_customers_expected = self.count_customers + 1
-        num_pages_expected = self._calc_num_pages(count_customers_expected, self.count_customers_per_page)
+        num_pages_expected = _calc_num_pages(count_customers_expected, self.count_customers_per_page)
 
         count_customers = Customer.objects.count()
         self.assertEquals(count_customers, count_customers_expected)
