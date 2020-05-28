@@ -125,6 +125,26 @@ class CustomersDetailTestCase(TestCase):
 
     # ----- DELETE -----
 
+    def test_delete_clean(self):
+        client = Client()
+        count_customers_expected = self.count_customers
+        for id_customer in self.test_id_customers_clear:
+            response = client.delete(self.url_base + str(id_customer))
+            # print('\nresponse  ', response)
+            self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+            count_customers_expected = count_customers_expected - 1
+            # num_pages_expected = _calc_num_pages(count_customers_expected, self.count_customers_per_page)
+
+            count_customers = Customer.objects.count()
+            self.assertEquals(count_customers, count_customers_expected)
+
+            try:
+                deleted_customer = Customer.objects.get(id=id_customer)
+            except:
+                deleted_customer = None
+            self.assertEquals(deleted_customer, None)
+
     # ======================================================================
     # dirty
     # ======================================================================
