@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
+from django.views.generic import TemplateView
 from customers import views
 
 urlpatterns = [
@@ -23,4 +24,5 @@ urlpatterns = [
     path('api/customers/<int:pk>', views.customers_detail, name='customers_detail'),
     path('', views.home, name='home'),
     # re_path(r'^', views.all)
+    path('swagger/', TemplateView.as_view(template_name='swagger/index.html')),
 ]
