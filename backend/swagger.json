@@ -29,8 +29,8 @@
           "customers"
         ],
         "summary": "Get customers list (page)",
-        "operationId": "customers_list",
-        "description": "",
+        "operationId": "CustomersList.get",
+        "description": "customers_list",
         "parameters": [
           {
             "name": "page",
@@ -60,8 +60,8 @@
           "customers"
         ],
         "summary": "Create customer",
-        "operationId": "customers_create",
-        "description": "",
+        "operationId": "CustomersList.post",
+        "description": "customers_create",
         "parameters": [],
         "requestBody": {
           "content": {
@@ -89,8 +89,8 @@
           "customers"
         ],
         "summary": "Get customer",
-        "operationId": "customers_read",
-        "description": "",
+        "operationId": "CustomersDetail.get",
+        "description": "customers_read",
         "parameters": [],
         "responses": {
           "200": {
@@ -104,8 +104,8 @@
           "customers"
         ],
         "summary": "Update customer",
-        "operationId": "customers_update",
-        "description": "",
+        "operationId": "CustomersDetail.put",
+        "description": "customers_update",
         "parameters": [],
         "responses": {
           "200": {
@@ -119,8 +119,8 @@
           "customers"
         ],
         "summary": "Delete customer",
-        "operationId": "customers_delete",
-        "description": "",
+        "operationId": "CustomersDetail.delete",
+        "description": "customers_delete",
         "parameters": [],
         "responses": {
           "204": {
