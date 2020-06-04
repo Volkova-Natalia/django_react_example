@@ -20,8 +20,8 @@ from customers import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/customers/', views.customers_list, name='customers_list'),
-    path('api/customers/<int:pk>', views.customers_detail, name='customers_detail'),
+    path('api/customers/', views.CustomersList.as_view(), name='customers_list'),
+    path('api/customers/<int:pk>', views.CustomersDetail.as_view(), name='customers_detail'),
     path('', views.home, name='home'),
     # re_path(r'^', views.all)
     path('swagger/', TemplateView.as_view(template_name='swagger/index.html')),
