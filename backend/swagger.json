@@ -75,7 +75,10 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Customer created"
+          },
+          "400": {
+            "description": "Invalid input"
           }
         }
       },
@@ -94,7 +97,17 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/customer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid customer's pk value. The customer does not exist"
           }
         }
       },
@@ -109,7 +122,10 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Customer updated"
+          },
+          "404": {
+            "description": "Invalid customer's pk value. The customer does not exist<br>OR<br>Invalid input"
           }
         }
       },
@@ -124,7 +140,10 @@
         "parameters": [],
         "responses": {
           "204": {
-            "description": ""
+            "description": "Customer deleted"
+          },
+          "404": {
+            "description": "Invalid customer's pk value. The customer does not exist"
           }
         }
       },
