@@ -27,7 +27,7 @@ jobs:
         pip install -r backend/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python backend/manage.py test
       env:
           APPLICATION_ENVIRONMENT: ${{ secrets.APPLICATION_ENVIRONMENT }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
