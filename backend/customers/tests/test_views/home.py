@@ -26,7 +26,7 @@ class HomeTestCase(TestCase):
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         request = response.context['request']
-        response_content_expected = render(request, 'customers/_home.html').content
+        response_content_expected = render(request, 'customers/home.html').content
         self.assertEquals(response.content, response_content_expected)
 
     # ======================================================================
