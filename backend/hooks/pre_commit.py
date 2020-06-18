@@ -1,8 +1,8 @@
 # with open(r'..\.git/hooks/pre-commit', 'tw') as file:
 #     file.write(r"""#!/bin/sh
 # git stash -q --keep-index
-# source backend/venv/Scripts/activate
-# ./backend/manage.py test
+# source venv/Scripts/activate
+# ./manage.py test
 # RESULT=$?
 #
 # [ $RESULT -ne 0 ] && echo "
