@@ -2,7 +2,8 @@
 #     file.write(r"""#!/bin/sh
 # git stash -q --keep-index
 # source backend/venv/Scripts/activate
-# ./backend/manage.py test
+# cd backend
+# ./manage.py test
 # RESULT=$?
 #
 # [ $RESULT -ne 0 ] && echo "
