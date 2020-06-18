@@ -1,5 +1,12 @@
-with open(r'../.git/hooks/pre-push', 'tw') as file:
-    file.write(r"""#!/bin/sh
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+APPLICATION_ENVIRONMENT = os.getenv('APPLICATION_ENVIRONMENT')
+
+if APPLICATION_ENVIRONMENT == 'local':
+    with open(r'../.git/hooks/pre-push', 'tw') as file:
+        file.write(r"""#!/bin/sh
 git stash -q --keep-index
 source backend/venv/Scripts/activate
 cd backend
