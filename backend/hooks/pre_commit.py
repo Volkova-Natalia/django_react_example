@@ -13,6 +13,7 @@
 # "
 #
 # deactivate
+# cd ..
 #
 # git stash pop -q
 # [ $RESULT -ne 0 ] && exit 1
