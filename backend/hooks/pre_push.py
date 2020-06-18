@@ -1,4 +1,4 @@
-with open(r'..\.git/hooks/pre-push', 'tw') as file:
+with open(r'../.git/hooks/pre-push', 'tw') as file:
     file.write(r"""#!/bin/sh
 git stash -q --keep-index
 source backend/venv/Scripts/activate
