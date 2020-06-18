@@ -6,14 +6,14 @@
 # ./manage.py test
 # RESULT=$?
 #
+# deactivate
+# cd ..
+#
 # [ $RESULT -ne 0 ] && echo "
 # ------------------
 # Result: FAIL TESTS
 # ------------------
 # "
-#
-# deactivate
-# cd ..
 #
 # git stash pop -q
 # [ $RESULT -ne 0 ] && exit 1
