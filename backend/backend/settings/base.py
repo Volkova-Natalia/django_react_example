@@ -14,6 +14,8 @@ import os
 from dotenv import load_dotenv
 from distutils.util import strtobool
 
+from hooks import *
+
 # print(__file__)
 
 load_dotenv()
