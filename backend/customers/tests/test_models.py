@@ -22,7 +22,6 @@ class CustomerTestCase(TestCase):
             first_name='first_name_000',
             last_name='last_name_000',
         )
-        self.customer.save()
 
     def tearDown(self):
         self.customer.delete()
